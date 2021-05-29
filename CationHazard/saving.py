@@ -2,7 +2,7 @@
 from openpyxl import load_workbook
 
 
-class Store:
+class Saving:
     # 输入方法
     def __init__(self):
         self.highest_score = self.highest_score_output()
