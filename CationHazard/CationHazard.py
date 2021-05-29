@@ -72,6 +72,8 @@ class CationHazard:
                 self._store_display()
             if self.setting_display:
                 self._setting_display()
+
+            pygame.mixer.music.set_volume(self.settings.vol)
         # pygame.display.flip()
 
     def _title_display(self):
@@ -187,9 +189,11 @@ class CationHazard:
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                if self.store.return_rect.collidepoint(mouse_pos):
+                if self.setting.return_rect.collidepoint(mouse_pos):
                     self.title_display, self.setting_display = True, False
                     self._title_display()
+                if self.setting.vol_plus_image_rect.collidepoint(mouse_pos):
+                    self.settings.vol -= 1.0
 
 
 if __name__ == '__main__':

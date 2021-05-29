@@ -15,10 +15,14 @@
 import pygame
 import time
 
+from settings import Settings
+
 
 class Musics:
     def __init__(self):
         pygame.mixer.init()  # 初始化
+
+        self.settings = Settings()
 
     def play_music(self):
         pygame.mixer.music.load("materials/musics/Babe.mp3")  # 加载音乐
@@ -28,6 +32,7 @@ class Musics:
 if __name__ == "__main__":
     musics = Musics()
     musics.play_music()
+    pygame.mixer.music.set_volume(1)
     while True:
         userIn = input()  # 输入空格暂停
         if userIn == ' ':
