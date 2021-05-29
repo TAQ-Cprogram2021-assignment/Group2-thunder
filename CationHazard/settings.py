@@ -55,3 +55,7 @@ class Setting:
         self.resolving_power()
         self.frame_rate()
         self.return_button()
+
+
+if __name__ == "__main__":
+    settings = Settings()
