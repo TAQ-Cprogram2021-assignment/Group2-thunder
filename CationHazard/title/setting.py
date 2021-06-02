@@ -1,40 +1,30 @@
 import pygame
 
-from pictures import Pictures
-
-
-class Settings:
-    def __init__(self):
-        pictures = Pictures()
-        self.screen_size = pygame.Surface.get_size(pictures.background)
-
-        self.vol = 100.0
+from CationHazard.pictures import Pictures
 
 
 class Setting:
     def __init__(self, ch_game):
         self.screen = ch_game.screen
+        self.pictures = Pictures()
 
-        self.volume_image = pygame.image.load("../materials/pictures/setting/music_volume.png").convert_alpha()
-        self.volume_rect = self.volume_image.get_rect()
+        self.volume_rect = self.pictures.volume_image.get_rect()
         self.volume_rect.x = 70
         self.volume_rect.y = 100
 
-        self.vol_plus_image = pygame.image.load("../materials/pictures/头头.png").convert_alpha()
-        self.vol_plus_image_rect = self.vol_plus_image.get_rect()
+        self.vol_plus_image_rect = self.pictures.vol_plus_image.get_rect()
         self.vol_plus_image_rect.x = self.vol_plus_image_rect.x + 300
         self.vol_plus_image_rect.y = self.volume_rect.y
 
-        self.return_image = pygame.image.load("../materials/pictures/return.png").convert_alpha()
-        self.return_rect = self.return_image.get_rect()
+        self.return_rect = self.pictures.return_image.get_rect()
         self.return_rect.x = 0
         self.return_rect.y = 0
 
     def volume(self):
-        self.screen.blit(self.volume_image, self.volume_rect)
+        self.screen.blit(self.pictures.volume_image, self.volume_rect)
 
     def volume_plus(self):
-        self.screen.blit(self.vol_plus_image, self.vol_plus_image_rect)
+        self.screen.blit(self.pictures.vol_plus_image, self.vol_plus_image_rect)
 
     def sound_effects(self):
         sound_effects_image = pygame.image.load("../materials/pictures/setting/effect_volume.png").convert_alpha()
@@ -58,7 +48,7 @@ class Setting:
         self.screen.blit(frame_rate_image, frame_rate_rect)
 
     def return_button(self):
-        self.screen.blit(self.return_image, self.return_rect)
+        self.screen.blit(self.pictures.return_image, self.return_rect)
 
     def draw(self):
         self.volume()

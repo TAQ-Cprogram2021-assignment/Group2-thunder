@@ -15,7 +15,7 @@
 import pygame
 import time
 
-from CationHazard.title.settings import Settings
+from CationHazard.title.setting import Settings
 
 
 class Musics:

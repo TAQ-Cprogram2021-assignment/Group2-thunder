@@ -9,12 +9,12 @@ import time
 from pictures import Pictures
 from music import Musics
 from player import Plane
+from settings import Settings
 
 from title.title import Texts
 from title.title import Buttons
 from title.store import Store
-from title.settings import Settings
-from title.settings import Setting
+from title.setting import Setting
 
 from ion.cation import Ba
 from ion.anion import SO4
