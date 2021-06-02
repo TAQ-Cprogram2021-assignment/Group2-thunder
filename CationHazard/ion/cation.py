@@ -16,7 +16,7 @@ class Cation(Sprite):
 class Ba(Cation, Sprite):
     def __init__(self, ch_game):
         super().__init__(ch_game)
-        self.image = pygame.image.load("materials/pictures/Cation/Ba.png").convert_alpha()
+        self.image = pygame.image.load("../materials/pictures/Cation/Ba.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = \
             random.randint(0, self.screen_rect.width - self.rect.width), random.randint(-5 * self.rect.height, 0)

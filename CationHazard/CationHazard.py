@@ -6,18 +6,18 @@ import pygame
 import sys
 import time
 
-from settings import Settings
-from settings import Setting
 from pictures import Pictures
-from title import Texts
-from title import Buttons
 from music import Musics
-from store import Store
 from player import Plane
 
-from cation import Ba
+from title.title import Texts
+from title.title import Buttons
+from title.store import Store
+from title.settings import Settings
+from title.settings import Setting
 
-from anion import SO4
+from ion.cation import Ba
+from ion.anion import SO4
 
 
 class CationHazard:
