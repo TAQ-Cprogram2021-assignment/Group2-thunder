@@ -11,10 +11,10 @@ from music import Musics
 from player import Plane
 from settings import Settings
 
-from title.title import Texts
-from title.title import Buttons
-from title.store import Store
-from title.setting import Setting
+from titles import Texts
+from titles import Buttons
+from store import Store
+from setting import Setting
 
 from ion.cation import Ba
 from ion.anion import SO4
