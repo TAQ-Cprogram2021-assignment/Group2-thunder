@@ -26,49 +26,49 @@ class Store:
         self.screen.blit(speed_level_image, speed_level_rect)
 
     def draw_pere(self):
-        title_image = pygame.image.load("materials/pictures/title/title.png").convert_alpha()
+        title_image = pygame.image.load("materials/pictures/return.png").convert_alpha()
         title_rect = title_image.get_rect()
         title_rect.x = 70
         title_rect.y = 450
         self.screen.blit(title_image, title_rect)
 
     def draw_timer(self):
-        title_image = pygame.image.load("materials/pictures/title/title.png").convert_alpha()
+        title_image = pygame.image.load("materials/pictures/return.png").convert_alpha()
         title_rect = title_image.get_rect()
         title_rect.x = 300
         title_rect.y = 450
         self.screen.blit(title_image, title_rect)
 
     def draw_larger_tem(self):
-        title_image = pygame.image.load("materials/pictures/title/title.png").convert_alpha()
+        title_image = pygame.image.load("materials/pictures/return.png").convert_alpha()
         title_rect = title_image.get_rect()
         title_rect.x = 300
         title_rect.y = 130
         self.screen.blit(title_image, title_rect)
 
     def draw_speed_tem(self):
-        title_image = pygame.image.load("materials/pictures/title/title.png").convert_alpha()
+        title_image = pygame.image.load("materials/pictures/return.png").convert_alpha()
         title_rect = title_image.get_rect()
         title_rect.x = 300
         title_rect.y = 300
         self.screen.blit(title_image, title_rect)
 
     def draw_clear_tem(self):
-        title_image = pygame.image.load("materials/pictures/title/title.png").convert_alpha()
+        title_image = pygame.image.load("materials/pictures/return.png").convert_alpha()
         title_rect = title_image.get_rect()
         title_rect.y = 300
         title_rect.x = 540
         self.screen.blit(title_image, title_rect)
 
     def draw_wushuang(self):
-        title_image = pygame.image.load("materials/pictures/title/title.png").convert_alpha()
+        title_image = pygame.image.load("materials/pictures/return.png").convert_alpha()
         title_rect = title_image.get_rect()
         title_rect.x = 540
         title_rect.y = 130
         self.screen.blit(title_image, title_rect)
 
     def draw_yuzhi(self):
-        title_image = pygame.image.load("materials/pictures/title/title.png").convert_alpha()
+        title_image = pygame.image.load("materials/pictures/return.png").convert_alpha()
         title_rect = title_image.get_rect()
         title_rect.x = 540
         title_rect.y = 450
