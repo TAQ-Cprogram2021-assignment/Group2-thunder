@@ -16,8 +16,8 @@ from titles import Buttons
 from store import Store
 from setting import Setting
 
-from ion.cation import Ba
-from ion.anion import SO4
+from cation import Ba
+from anion import SO4
 
 
 class CationHazard:
