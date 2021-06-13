@@ -15,7 +15,7 @@ from titles import Texts
 from titles import Buttons
 from store import Store
 from setting import Setting
-from scorebroad import Scorebroad
+import scorebroad
 
 from cation import Ba
 from anion import SO4
@@ -43,6 +43,7 @@ class CationHazard:
         self.texts = Texts(self)
         self.buttons = Buttons(self)
         self.store = Store(self)
+        self.score_broad = scorebroad.Scoreboard(self)
 
         # 创建飞船实例
         self.player = Plane(self)
@@ -146,6 +147,7 @@ class CationHazard:
         self._create_ion()
         self.player.update_ship()
         self._check_player_cation_collide()
+        self.score_broad.show_score()
         pygame.display.flip()
 
     def _create_cation(self):
