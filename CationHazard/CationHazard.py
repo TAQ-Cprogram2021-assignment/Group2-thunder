@@ -15,6 +15,7 @@ from titles import Texts
 from titles import Buttons
 from store import Store
 from setting import Setting
+from scorebroad import Scorebroad
 
 from cation import Ba
 from anion import SO4
