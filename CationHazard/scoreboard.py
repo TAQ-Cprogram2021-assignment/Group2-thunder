@@ -27,6 +27,6 @@ class Scoreboard:
         self.prep_score()
         self.screen.blit(self.score_image, self.score_rect)
 
-    def jiafen(self):
-        self.score += 1
+    def score_up(self):
+        self.score += 233
 

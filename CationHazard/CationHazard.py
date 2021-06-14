@@ -33,7 +33,7 @@ class CationHazard:
 
         # 创建显示窗口
         pygame.display.set_icon(self.pictures.logo)
-        pygame.display.set_caption("Cation Hazard")
+        pygame.display.set_caption("ion Hazard")
         self.screen = pygame.display.set_mode(self.settings.screen_size)
 
         # 创建设置、图片实例
@@ -117,10 +117,11 @@ class CationHazard:
         if event.key == pygame.K_s or event.key == pygame.K_DOWN:
             self.player.moving_down = True
 
-        if event.key == pygame.K_j:
+        if event.key == pygame.K_SPACE:
             self._create_bullet()
-            print(1)
-            self.bullets.draw(self.screen)
+            for bullet in self.bullets:
+                bullet.draw_bullet()
+            self.bullets.update()
 
     def keyup_events(self, event):
         if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -154,8 +155,14 @@ class CationHazard:
         self._create_ion()
         self.player.update_ship()
         self._check_player_cation_collide()
-        self._bullet_shoot()
+        for event in pygame.event.get():
+            if event.key == pygame.K_SPACE:
+                self._create_bullet()
+        for bullet in self.bullets:
+            bullet.draw_bullet()
+        self.bullets.update()
         self.score_broad.show_score()
+        self._check_bullet_anion_collide()
         pygame.display.flip()
 
     def _create_ion(self):
@@ -174,12 +181,15 @@ class CationHazard:
     def _check_player_cation_collide(self):
         collided_cation = pygame.sprite.spritecollide(self.player, self.cations_in, True)
         if collided_cation:
-            self.score_broad.jiafen()
+            self.score_broad.score_up()
             # bullet = Bullet(self, collided_cation[0])
             # self.cations_shoot.add(bullet)
 
+    def _check_bullet_anion_collide(self):
+        collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions_in, True, True)
+
     def _create_bullet(self):
-        bullet = Ba_bullet(self)
+        bullet = Ba_bullet(self, self.player.rect)
         self.bullets.add(bullet)
 
     def _bullet_shoot(self):
