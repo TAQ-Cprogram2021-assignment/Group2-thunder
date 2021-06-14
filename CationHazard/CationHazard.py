@@ -117,6 +117,11 @@ class CationHazard:
         if event.key == pygame.K_s or event.key == pygame.K_DOWN:
             self.player.moving_down = True
 
+        if event.key == pygame.K_j:
+            self._create_bullet()
+            print(1)
+            self.bullets.draw(self.screen)
+
     def keyup_events(self, event):
         if event.key == pygame.K_a or event.key == pygame.K_LEFT:
             self.player.moving_left = False
@@ -149,7 +154,7 @@ class CationHazard:
         self._create_ion()
         self.player.update_ship()
         self._check_player_cation_collide()
-        self._check_bullet_shoot()
+        self._bullet_shoot()
         self.score_broad.show_score()
         pygame.display.flip()
 
@@ -177,13 +182,7 @@ class CationHazard:
         bullet = Ba_bullet(self)
         self.bullets.add(bullet)
 
-    def _check_bullet_shoot(self):
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_j:
-                    self._create_bullet()
-                    print(self.bullets)
-                    self.bullets.draw(self.screen)
+    def _bullet_shoot(self):
         self.bullets.update()
 
     def _store_display(self):
