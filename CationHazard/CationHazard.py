@@ -148,6 +148,7 @@ class CationHazard:
         self._create_ion()
         self.player.update_ship()
         self._check_player_cation_collide()
+        self._check_bullet_shoot()
         self.score_broad.show_score()
         pygame.display.flip()
 
@@ -175,6 +176,13 @@ class CationHazard:
         if collided_cation:
             bullet = collided_cation[0]
             self.cations_shoot.add(bullet)
+
+    def _check_bullet_shoot(self):
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.cations_shoot.draw(self.screen)
+        self.cations_shoot.update()
 
     def _store_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
