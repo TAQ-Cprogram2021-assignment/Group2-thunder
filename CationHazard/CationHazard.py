@@ -53,8 +53,9 @@ class CationHazard:
         self.store_display = False
         self.setting_display = False
 
-        self.cations = pygame.sprite.Group()
-        self.anions = pygame.sprite.Group()
+        self.cations_in = pygame.sprite.Group()
+        self.anions_in = pygame.sprite.Group()
+        self.cations_shoot = pygame.sprite.Group()
 
     def run_game(self):
         # 绘制屏幕并显示
@@ -152,11 +153,11 @@ class CationHazard:
 
     def _create_cation(self):
         _Ba = Ba(self)
-        self.cations.add(_Ba)
+        self.cations_in.add(_Ba)
 
     def _create_anion(self):
         _SO4 = SO4(self)
-        self.anions.add(_SO4)
+        self.anions_in.add(_SO4)
 
     def _create_ion(self):
         now_time = time.time()
@@ -164,15 +165,16 @@ class CationHazard:
             self._create_cation()
         if (now_time - self.start_time) % 5 < 0.01:
             self._create_anion()
-        self.cations.draw(self.screen)
-        self.anions.draw(self.screen)
-        self.cations.update()
-        self.anions.update()
+        self.cations_in.draw(self.screen)
+        self.anions_in.draw(self.screen)
+        self.cations_in.update()
+        self.anions_in.update()
 
     def _check_player_cation_collide(self):
-        collided_cation = pygame.sprite.spritecollide(self.player, self.cations, True)
+        collided_cation = pygame.sprite.spritecollide(self.player, self.cations_in, True)
         if collided_cation:
             bullet = collided_cation[0]
+            self.cations_shoot.add(bullet)
 
     def _store_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
