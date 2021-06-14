@@ -5,7 +5,7 @@ from player import Plane
 
 
 class Bullet(Sprite):
-    def __init__(self, ch_game, sprite):
+    def __init__(self, ch_game):
         super().__init__()
         self.screen = ch_game.screen
         self.screen_rect = self.screen.get_rect()

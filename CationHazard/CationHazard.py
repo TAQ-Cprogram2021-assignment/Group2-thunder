@@ -180,8 +180,9 @@ class CationHazard:
     def _check_bullet_shoot(self):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_j:
                     self._create_bullet()
+                    print(self.bullets)
                     self.bullets.draw(self.screen)
         self.bullets.update()
 
