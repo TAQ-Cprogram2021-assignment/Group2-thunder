@@ -15,7 +15,8 @@ from titles import Texts
 from titles import Buttons
 from store import Store
 from setting import Setting
-import scorebroad
+from scoreboard import Scoreboard
+from bullet import Bullet
 
 from cation import Ba
 from anion import SO4
@@ -43,7 +44,7 @@ class CationHazard:
         self.texts = Texts(self)
         self.buttons = Buttons(self)
         self.store = Store(self)
-        self.score_broad = scorebroad.Scoreboard(self)
+        self.score_broad = Scoreboard(self)
 
         # 创建飞船实例
         self.player = Plane(self)
@@ -174,7 +175,7 @@ class CationHazard:
     def _check_player_cation_collide(self):
         collided_cation = pygame.sprite.spritecollide(self.player, self.cations_in, True)
         if collided_cation:
-            bullet = collided_cation[0]
+            bullet = Bullet(self, collided_cation[0])
             self.cations_shoot.add(bullet)
 
     def _check_bullet_shoot(self):
