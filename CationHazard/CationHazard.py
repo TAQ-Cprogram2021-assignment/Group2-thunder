@@ -16,7 +16,7 @@ from titles import Buttons
 from store import Store
 from setting import Setting
 from scoreboard import Scoreboard
-from bullet import Bullet
+from bullet import Ba as Ba_bullet
 
 from cation import Ba
 from anion import SO4
@@ -56,7 +56,7 @@ class CationHazard:
 
         self.cations_in = pygame.sprite.Group()
         self.anions_in = pygame.sprite.Group()
-        self.cations_shoot = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
 
     def run_game(self):
         # 绘制屏幕并显示
@@ -153,20 +153,14 @@ class CationHazard:
         self.score_broad.show_score()
         pygame.display.flip()
 
-    def _create_cation(self):
-        _Ba = Ba(self)
-        self.cations_in.add(_Ba)
-
-    def _create_anion(self):
-        _SO4 = SO4(self)
-        self.anions_in.add(_SO4)
-
     def _create_ion(self):
         now_time = time.time()
         if (now_time - self.start_time) % 5 < 0.01:
-            self._create_cation()
+            _Ba = Ba(self)
+            self.cations_in.add(_Ba)
         if (now_time - self.start_time) % 5 < 0.01:
-            self._create_anion()
+            _SO4 = SO4(self)
+            self.anions_in.add(_SO4)
         self.cations_in.draw(self.screen)
         self.anions_in.draw(self.screen)
         self.cations_in.update()
@@ -175,15 +169,21 @@ class CationHazard:
     def _check_player_cation_collide(self):
         collided_cation = pygame.sprite.spritecollide(self.player, self.cations_in, True)
         if collided_cation:
-            bullet = Bullet(self, collided_cation[0])
-            self.cations_shoot.add(bullet)
+            self.score_broad.jiafen()
+            # bullet = Bullet(self, collided_cation[0])
+            # self.cations_shoot.add(bullet)
+
+    def _create_bullet(self):
+        bullet = Ba_bullet(self)
+        self.bullets.add(bullet)
 
     def _check_bullet_shoot(self):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self.cations_shoot.draw(self.screen)
-        self.cations_shoot.update()
+                    self._create_bullet()
+                    self.bullets.draw(self.screen)
+        self.bullets.update()
 
     def _store_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
