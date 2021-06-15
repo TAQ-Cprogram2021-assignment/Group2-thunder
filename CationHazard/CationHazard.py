@@ -5,6 +5,7 @@
 import pygame
 import sys
 import time
+from random import randint
 
 from pictures import Pictures
 from music import Musics
@@ -33,7 +34,7 @@ class CationHazard:
 
         # 创建显示窗口
         pygame.display.set_icon(self.pictures.logo)
-        pygame.display.set_caption("ion Hazard")
+        pygame.display.set_caption("Cation Hazard")
         self.screen = pygame.display.set_mode(self.settings.screen_size)
 
         # 创建设置、图片实例
@@ -54,6 +55,10 @@ class CationHazard:
         self.store_display = False
         self.setting_display = False
 
+        self.play_music_play = True
+
+        self.bullet_shoot = 0
+
         self.cations_in = pygame.sprite.Group()
         self.anions_in = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
@@ -62,7 +67,7 @@ class CationHazard:
         # 绘制屏幕并显示
         self.screen.blit(self.pictures.background, (0, 0))
         pygame.display.flip()
-        self.musics.play_music()
+        self.musics.play_title_music()
 
         while True:
             self.check_events()
@@ -149,7 +154,9 @@ class CationHazard:
             sys.exit()
 
     def _play_game(self):
-        pygame.mixer.music.stop()
+        if self.play_music_play:
+            self.musics.play_play_music()
+            self.play_music_play = False
         self.screen.blit(self.pictures.background, (0, 0))
         self.player.draw_plane()
         self._create_ion()
@@ -162,6 +169,7 @@ class CationHazard:
             bullet.draw_bullet()
         self.bullets.update()
         self.score_broad.show_score()
+        pygame.sprite.groupcollide(self.anions_in, self.cations_in, True, True)
         self._check_bullet_anion_collide()
         pygame.display.flip()
 
@@ -181,19 +189,17 @@ class CationHazard:
     def _check_player_cation_collide(self):
         collided_cation = pygame.sprite.spritecollide(self.player, self.cations_in, True)
         if collided_cation:
-            self.score_broad.score_up()
-            # bullet = Bullet(self, collided_cation[0])
-            # self.cations_shoot.add(bullet)
+            self.bullet_shoot = randint(3, 5)
+
 
     def _check_bullet_anion_collide(self):
         collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions_in, True, True)
+        if collided_cation:
+            self.score_broad.score_up()
 
     def _create_bullet(self):
         bullet = Ba_bullet(self, self.player.rect)
         self.bullets.add(bullet)
-
-    def _bullet_shoot(self):
-        self.bullets.update()
 
     def _store_display(self):
         self.screen.blit(self.pictures.background, (0, 0))

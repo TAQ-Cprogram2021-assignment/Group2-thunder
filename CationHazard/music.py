@@ -24,14 +24,22 @@ class Musics:
 
         self.settings = Settings()
 
-    def play_music(self):
-        pygame.mixer.music.load("materials/musics/Babe.mp3")  # 加载音乐
+        self.title_music = "materials/musics/Babe.mp3"
+
+        self.play_music = "materials/musics/NightTheater.ogg"
+
+    def play_title_music(self):
+        pygame.mixer.music.load(self.title_music)  # 加载音乐
+        pygame.mixer.music.play(-1)  # 播放
+
+    def play_play_music(self):
+        pygame.mixer.music.load(self.play_music)  # 加载音乐
         pygame.mixer.music.play(-1)  # 播放
 
 
 if __name__ == "__main__":
     musics = Musics()
-    musics.play_music()
+    musics.play_title_music()
     pygame.mixer.music.set_volume(1)
     while True:
         userIn = input()  # 输入空格暂停
