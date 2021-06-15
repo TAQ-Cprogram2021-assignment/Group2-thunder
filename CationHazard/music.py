@@ -26,7 +26,7 @@ class Musics:
 
         self.title_music = "materials/musics/Babe.mp3"
 
-        self.play_music = "materials/musics/NightTheater.ogg"
+        self.play_music = "materials/musics/Blu.mp3"
 
     def play_title_music(self):
         pygame.mixer.music.load(self.title_music)  # 加载音乐

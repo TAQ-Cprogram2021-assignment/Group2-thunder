@@ -55,6 +55,7 @@ class CationHazard:
         self.store_display = False
         self.setting_display = False
 
+        self.play_title_music = True
         self.play_music_play = True
 
         self.bullet_shoot = 0
@@ -67,7 +68,6 @@ class CationHazard:
         # 绘制屏幕并显示
         self.screen.blit(self.pictures.background, (0, 0))
         pygame.display.flip()
-        self.musics.play_title_music()
 
         while True:
             self.check_events()
@@ -87,6 +87,9 @@ class CationHazard:
 
     def _title_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
+        if self.play_title_music:
+            self.musics.play_title_music()
+            self.play_title_music = False
         self.texts.draw_title()
         self.buttons.button()
         pygame.display.flip()
@@ -110,8 +113,6 @@ class CationHazard:
         # keys = pygame.key.get_pressed()
         if event.key == pygame.K_q:
             sys.exit()
-        elif event.key == pygame.K_s:
-            self.title_display = False
 
         if event.key == pygame.K_a or event.key == pygame.K_LEFT:
             self.player.moving_left = True
@@ -122,11 +123,12 @@ class CationHazard:
         if event.key == pygame.K_s or event.key == pygame.K_DOWN:
             self.player.moving_down = True
 
-        if event.key == pygame.K_SPACE:
-            self._create_bullet()
-            for bullet in self.bullets:
-                bullet.draw_bullet()
-            self.bullets.update()
+        if self.play_game:
+            if event.key == pygame.K_SPACE:
+                self._create_bullet()
+                for bullet in self.bullets:
+                    bullet.draw_bullet()
+                self.bullets.update()
 
     def keyup_events(self, event):
         if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -162,12 +164,14 @@ class CationHazard:
         self._create_ion()
         self.player.update_ship()
         self._check_player_cation_collide()
+
         for event in pygame.event.get():
             if event.key == pygame.K_SPACE:
                 self._create_bullet()
         for bullet in self.bullets:
             bullet.draw_bullet()
         self.bullets.update()
+        
         self.score_broad.show_score()
         pygame.sprite.groupcollide(self.anions_in, self.cations_in, True, True)
         self._check_bullet_anion_collide()
@@ -191,7 +195,6 @@ class CationHazard:
         if collided_cation:
             self.bullet_shoot = randint(3, 5)
 
-
     def _check_bullet_anion_collide(self):
         collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions_in, True, True)
         if collided_cation:
@@ -200,6 +203,14 @@ class CationHazard:
     def _create_bullet(self):
         bullet = Ba_bullet(self, self.player.rect)
         self.bullets.add(bullet)
+
+    def shoot(self):
+        for event in pygame.event.get():
+            if event.key == pygame.K_SPACE:
+                self._create_bullet()
+        for bullet in self.bullets:
+            bullet.draw_bullet()
+        self.bullets.update()
 
     def _store_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
