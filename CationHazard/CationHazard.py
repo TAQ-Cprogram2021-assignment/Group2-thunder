@@ -124,11 +124,9 @@ class CationHazard:
             self.player.moving_down = True
 
         if self.play_game:
-            if event.key == pygame.K_SPACE:
-                self._create_bullet()
-                for bullet in self.bullets:
-                    bullet.draw_bullet()
-                self.bullets.update()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self._create_bullet()
 
     def keyup_events(self, event):
         if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -165,13 +163,10 @@ class CationHazard:
         self.player.update_ship()
         self._check_player_cation_collide()
 
-        for event in pygame.event.get():
-            if event.key == pygame.K_SPACE:
-                self._create_bullet()
         for bullet in self.bullets:
             bullet.draw_bullet()
         self.bullets.update()
-        
+
         self.score_broad.show_score()
         pygame.sprite.groupcollide(self.anions_in, self.cations_in, True, True)
         self._check_bullet_anion_collide()
