@@ -36,6 +36,7 @@ class CationHazard:
         pygame.display.set_icon(self.pictures.logo)
         pygame.display.set_caption("Cation Hazard")
         self.screen = pygame.display.set_mode(self.settings.screen_size)
+        self.screen_size = self.screen.get_rect()
 
         # 创建设置、图片实例
         self.setting = Setting(self)
@@ -60,8 +61,8 @@ class CationHazard:
 
         self.bullet_shoot = 0
 
-        self.cations_in = pygame.sprite.Group()
-        self.anions_in = pygame.sprite.Group()
+        self.cations = pygame.sprite.Group()
+        self.anions = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
 
     def run_game(self):
@@ -123,10 +124,11 @@ class CationHazard:
         if event.key == pygame.K_s or event.key == pygame.K_DOWN:
             self.player.moving_down = True
 
-        if self.play_game:
+        if self.play_game and self.bullet_shoot > 0:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self._create_bullet()
+                    self.bullet_shoot -= 1
 
     def keyup_events(self, event):
         if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -162,50 +164,41 @@ class CationHazard:
         self._create_ion()
         self.player.update_ship()
         self._check_player_cation_collide()
-
         for bullet in self.bullets:
             bullet.draw_bullet()
         self.bullets.update()
-
         self.score_broad.show_score()
-        pygame.sprite.groupcollide(self.anions_in, self.cations_in, True, True)
+        pygame.sprite.groupcollide(self.anions, self.cations, True, True)
         self._check_bullet_anion_collide()
+        self._delete_ions()
         pygame.display.flip()
 
     def _create_ion(self):
         now_time = time.time()
         if (now_time - self.start_time) % 5 < 0.01:
             _Ba = Ba(self)
-            self.cations_in.add(_Ba)
+            self.cations.add(_Ba)
         if (now_time - self.start_time) % 5 < 0.01:
             _SO4 = SO4(self)
-            self.anions_in.add(_SO4)
-        self.cations_in.draw(self.screen)
-        self.anions_in.draw(self.screen)
-        self.cations_in.update()
-        self.anions_in.update()
+            self.anions.add(_SO4)
+        self.cations.draw(self.screen)
+        self.anions.draw(self.screen)
+        self.cations.update()
+        self.anions.update()
 
     def _check_player_cation_collide(self):
-        collided_cation = pygame.sprite.spritecollide(self.player, self.cations_in, True)
+        collided_cation = pygame.sprite.spritecollide(self.player, self.cations, True)
         if collided_cation:
-            self.bullet_shoot = randint(3, 5)
+            self.bullet_shoot += randint(3, 5)
 
     def _check_bullet_anion_collide(self):
-        collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions_in, True, True)
+        collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions, True, True)
         if collided_cation:
             self.score_broad.score_up()
 
     def _create_bullet(self):
         bullet = Ba_bullet(self, self.player.rect)
         self.bullets.add(bullet)
-
-    def shoot(self):
-        for event in pygame.event.get():
-            if event.key == pygame.K_SPACE:
-                self._create_bullet()
-        for bullet in self.bullets:
-            bullet.draw_bullet()
-        self.bullets.update()
 
     def _store_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
@@ -230,6 +223,11 @@ class CationHazard:
                     self._title_display()
                 if self.setting.vol_plus_image_rect.collidepoint(mouse_pos):
                     self.settings.vol -= 1.0
+
+    def _delete_ions(self):
+        for cation in self.cations:
+            if cation.rect.top > self.screen_size.bottom:
+                self.cations.remove(cation)
 
 
 if __name__ == '__main__':

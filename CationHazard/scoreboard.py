@@ -1,9 +1,12 @@
 import pygame.font
 
+from saving import Saving
+
 
 class Scoreboard:
     def __init__(self, ai_game):
         """初始化显示得分涉及的属性"""
+        self.savings = Saving()
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
         self.score = 0
@@ -16,11 +19,13 @@ class Scoreboard:
 
     def prep_score(self):
         """将得分转换为图像"""
-        score_str = str(self.score)
+        score_str = "score: " + str(self.score)
         self.score_image = self.font.render(score_str, True, self.text_color, None)
         self.score_rect = self.score_image.get_rect()
         self.score_rect.left = 0
         self.score_rect.top = 20
+        if self.score > self.savings.highest_score:
+            self.savings.highest_score_input(self.score)
 
     def show_score(self):
         """在屏幕上显示得分"""
