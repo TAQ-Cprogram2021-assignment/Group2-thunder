@@ -1,12 +1,12 @@
 import pygame.font
 
 from saving import Saving
+from settings import Settings
 
 
 class Scoreboard:
     def __init__(self, ai_game):
         """初始化显示得分涉及的属性"""
-        self.savings = Saving()
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
         self.score = 0
@@ -14,6 +14,9 @@ class Scoreboard:
         # 显示得分信息时所使用的字体设置
         self.text_color = (255, 255, 255)
         self.font = pygame.font.SysFont("", 48)
+
+        self.savings = Saving()
+        self.bullet_num = 0
 
         self.highest_score = self.savings.highest_score
 
@@ -31,14 +34,18 @@ class Scoreboard:
         self.score_rect.left = 0
         self.score_rect.top = self.highest_score_rect.top + self.highest_score_rect.height
 
-        bullet_num_str = "Bullet: "
-
+        bullet_num_str = "Bullet: " + str(self.bullet_num)
+        self.bullet_num_image = self.font.render(bullet_num_str, True, self.text_color, None)
+        self.bullet_num_rect = self.bullet_num_image.get_rect()
+        self.bullet_num_rect.top = 20
+        self.bullet_num_rect.right = self.screen_rect.right
 
     def show_score(self):
         """在屏幕上显示得分"""
         self.prep_score()
         self.screen.blit(self.highest_score_image, self.highest_score_rect)
         self.screen.blit(self.score_image, self.score_rect)
+        self.screen.blit(self.bullet_num_image, self.bullet_num_rect)
 
     def score_up(self):
         self.score += 233

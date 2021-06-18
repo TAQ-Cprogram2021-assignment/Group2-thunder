@@ -108,11 +108,11 @@ class CationHazard:
                     self.check_mouse_button_down_events(mouse_pos)
 
     def keydown_events(self, event):
-        # 响应键盘按下事件
-        # keys = pygame.key.get_pressed()
+        """响应键盘按下事件"""
         if event.key == pygame.K_q:
             sys.exit()
 
+        # 用前后左右或wasd控制人物移动
         if event.key == pygame.K_a or event.key == pygame.K_LEFT:
             self.player.moving_left = True
         if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
@@ -122,13 +122,17 @@ class CationHazard:
         if event.key == pygame.K_s or event.key == pygame.K_DOWN:
             self.player.moving_down = True
 
+        # 游戏运行且子弹充足时按下空格发射子弹
         if self.play_game and self.settings.bullet_num > 0:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self._create_bullet()
+                    bullet = Ba_bullet(self, self.player.rect)
+                    self.bullets.add(bullet)
                     self.settings.bullet_num -= 1
+                    self.score_broad.bullet_num = self.settings.bullet_num
 
     def keyup_events(self, event):
+        """键盘抬起时，人物停止移动"""
         if event.key == pygame.K_a or event.key == pygame.K_LEFT:
             self.player.moving_left = False
         if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
@@ -170,7 +174,8 @@ class CationHazard:
         # 检测玩家和阳离子碰撞，碰撞后增加子弹数
         collided_cation = pygame.sprite.spritecollide(self.player, self.cations, True)
         if collided_cation:
-            self.settings.bullet_num += randint(3, 5)
+            self.settings.bullet_num += randint(1, 3)
+            self.score_broad.bullet_num = self.settings.bullet_num
 
         # 绘制发射的子弹
         for bullet in self.bullets:
@@ -179,38 +184,32 @@ class CationHazard:
         self.score_broad.show_score()
 
         # 删除生成时就在一起的阴阳离子
-        pygame.sprite.groupcollide(self.anions, self.cations, True, True)
+        pygame.sprite.groupcollide(self.anions, self.cations, False, True)
 
-        # 检测子弹和阴离子的碰撞
-        self._check_bullet_anion_collide()
+        # 检测子弹和阴离子的碰撞，碰撞后得分
+        collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions, True, True)
+        if collided_cation:
+            self.score_broad.score_up()
 
         # 删除屏幕外的子弹
         self._delete_ions()
 
-        #更新画面
+        # 更新画面
         pygame.display.flip()
 
     def _create_ion(self):
+        """创建阴阳离子"""
         now_time = time.time()
         if (now_time - self.start_time) % 5 < 0.01:
             _Ba = Ba(self)
             self.cations.add(_Ba)
-        if (now_time - self.start_time) % 5 < 0.01:
+        if (now_time - self.start_time) % 2 < 0.01:
             _SO4 = SO4(self)
             self.anions.add(_SO4)
         self.cations.draw(self.screen)
         self.anions.draw(self.screen)
         self.cations.update()
         self.anions.update()
-
-    def _check_bullet_anion_collide(self):
-        collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions, True, True)
-        if collided_cation:
-            self.score_broad.score_up()
-
-    def _create_bullet(self):
-        bullet = Ba_bullet(self, self.player.rect)
-        self.bullets.add(bullet)
 
     def _store_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
