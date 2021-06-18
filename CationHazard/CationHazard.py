@@ -59,8 +59,6 @@ class CationHazard:
         self.play_title_music = True
         self.play_music_play = True
 
-        self.bullet_shoot = 0
-
         self.cations = pygame.sprite.Group()
         self.anions = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
@@ -124,11 +122,11 @@ class CationHazard:
         if event.key == pygame.K_s or event.key == pygame.K_DOWN:
             self.player.moving_down = True
 
-        if self.play_game and self.bullet_shoot > 0:
+        if self.play_game and self.settings.bullet_num > 0:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self._create_bullet()
-                    self.bullet_shoot -= 1
+                    self.settings.bullet_num -= 1
 
     def keyup_events(self, event):
         if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -156,21 +154,40 @@ class CationHazard:
             sys.exit()
 
     def _play_game(self):
+        """游戏主进程"""
+
+        # 只播放一次音乐
         if self.play_music_play:
             self.musics.play_play_music()
             self.play_music_play = False
+
+        # 绘制背景、玩家，并开始创建阴阳离子
         self.screen.blit(self.pictures.background, (0, 0))
         self.player.draw_plane()
         self._create_ion()
         self.player.update_ship()
-        self._check_player_cation_collide()
+
+        # 检测玩家和阳离子碰撞，碰撞后增加子弹数
+        collided_cation = pygame.sprite.spritecollide(self.player, self.cations, True)
+        if collided_cation:
+            self.settings.bullet_num += randint(3, 5)
+
+        # 绘制发射的子弹
         for bullet in self.bullets:
             bullet.draw_bullet()
         self.bullets.update()
         self.score_broad.show_score()
+
+        # 删除生成时就在一起的阴阳离子
         pygame.sprite.groupcollide(self.anions, self.cations, True, True)
+
+        # 检测子弹和阴离子的碰撞
         self._check_bullet_anion_collide()
+
+        # 删除屏幕外的子弹
         self._delete_ions()
+
+        #更新画面
         pygame.display.flip()
 
     def _create_ion(self):
@@ -185,11 +202,6 @@ class CationHazard:
         self.anions.draw(self.screen)
         self.cations.update()
         self.anions.update()
-
-    def _check_player_cation_collide(self):
-        collided_cation = pygame.sprite.spritecollide(self.player, self.cations, True)
-        if collided_cation:
-            self.bullet_shoot += randint(3, 5)
 
     def _check_bullet_anion_collide(self):
         collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions, True, True)
@@ -228,6 +240,12 @@ class CationHazard:
         for cation in self.cations:
             if cation.rect.top > self.screen_size.bottom:
                 self.cations.remove(cation)
+        for anion in self.anions:
+            if anion.rect.top > self.screen_size.bottom:
+                self.cations.remove(anion)
+        for bullet in self.bullets:
+            if bullet.rect.bottom < 0:
+                self.bullets.remove(bullet)
 
 
 if __name__ == '__main__':
