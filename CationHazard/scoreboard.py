@@ -1,7 +1,7 @@
 import pygame.font
 
 from saving import Saving
-from settings import Settings
+# from settings import Settings
 
 
 class Scoreboard:
@@ -18,7 +18,7 @@ class Scoreboard:
         self.savings = Saving()
         self.bullet_num = 0
 
-        self.highest_score = self.savings.highest_score
+        self.highest_score = self.savings.highest_score_output()
 
     def prep_score(self):
         """将得分转换为图像"""
@@ -38,7 +38,7 @@ class Scoreboard:
         self.bullet_num_image = self.font.render(bullet_num_str, True, self.text_color, None)
         self.bullet_num_rect = self.bullet_num_image.get_rect()
         self.bullet_num_rect.top = 20
-        self.bullet_num_rect.right = self.screen_rect.right
+        self.bullet_num_rect.right = self.screen_rect.right - 20
 
     def show_score(self):
         """在屏幕上显示得分"""
@@ -53,3 +53,5 @@ class Scoreboard:
             self.savings.highest_score_input(self.score)
             self.highest_score = self.score
 
+    def prep_level(self):
+        level_str = "Level: " + str(self.savings.)

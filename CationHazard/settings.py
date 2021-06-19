@@ -11,3 +11,5 @@ class Settings:
         self.vol = 100.0
 
         self.bullet_num = 0
+
+        self.blood = 100

@@ -174,7 +174,7 @@ class CationHazard:
         # 检测玩家和阳离子碰撞，碰撞后增加子弹数
         collided_cation = pygame.sprite.spritecollide(self.player, self.cations, True)
         if collided_cation:
-            self.settings.bullet_num += randint(1, 3)
+            self.settings.bullet_num += randint(2, 4)
             self.score_broad.bullet_num = self.settings.bullet_num
 
         # 绘制发射的子弹
@@ -183,8 +183,10 @@ class CationHazard:
         self.bullets.update()
         self.score_broad.show_score()
 
-        # 删除生成时就在一起的阴阳离子
+        # 删除生成时就在一起的离子
         pygame.sprite.groupcollide(self.anions, self.cations, False, True)
+        pygame.sprite.groupcollide(self.cations, self.cations, False, True)
+        pygame.sprite.groupcollide(self.anions, self.anions, False, True)
 
         # 检测子弹和阴离子的碰撞，碰撞后得分
         collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions, True, True)

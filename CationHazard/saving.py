@@ -2,20 +2,10 @@
 from openpyxl import load_workbook
 
 
-class Saving:
+class Store:
     # 输入方法
     def __init__(self):
-        self.highest_score = self.highest_score_output()
-        self.coin = self.goldencoin_output()
-        self.attract_area_level = self.attractarea_level_output()
-        self.speed_level = self.speed_level_output()
-        self.penetrability = self.penetrability_level_output()
-        self.frozen = self.frozen_output()
-        self.attract_area_temporary = self.attractarea_temporary_output()
-        self.speed_temporary = self.speed_temporary_output()
-        self.clear = self.clear_output()
-        self.wushuanglengque_output = self.wushuanglengque_output()
-        self.seer = self.seer_output()
+        pass
 
     # 用来存入数据的函数,其中value0为需要传入的变量，b为需要导入的单元格。
     def data_input(self, value0, b):
@@ -50,24 +40,33 @@ class Saving:
         return a
 
     # 金币输入
-    def goldencoin_input(self, val):
+    def golden_coin_input(self, val):
         self.data_input(val, 'C2')
         return self
 
     # 金币的输出
-    def goldencoin_output(self):
+    def golden_coin_output(self):
         a = self.data_output('C2')
         return a
 
-    # 天赋类（被动）
+    # 等级的输入
+    def rank_input(self, val):
+        self.data_input(val, 'E2')
+        return self
 
+    # 金币的输出
+    def rank_output(self):
+        a = self.data_output('E2')
+        return a
+
+    # 天赋类（被动）
     # 吸引面积等级的输入
-    def attractarea_level_input(self, val):
+    def attract_area_level_input(self, val):
         self.data_input(val, 'B5')
         return self
 
     # 吸引面积等级的输出
-    def attractarea_level_output(self):
+    def attract_area_level_output(self):
         a = self.data_output('B5')
         return a
 
@@ -92,7 +91,6 @@ class Saving:
         return a
 
     # 商店类（效果）
-
     # 时间类（冷却）的输入
     def frozen_input(self, val):
         self.data_input(val, 'B7')
@@ -104,12 +102,12 @@ class Saving:
         return a
 
     # 短暂增大面积道具数目的输入
-    def attractarea_temporary_input(self, val):
+    def attract_area_temporary_input(self, val):
         self.data_input(val, 'C7')
         return self
 
     # 短暂增大面积道具数目的输出
-    def attractarea_temporary_output(self):
+    def attract_area_temporary_output(self):
         a = self.data_output('C7')
         return a
 
@@ -152,4 +150,13 @@ class Saving:
     # 预知屏幕外的离子（小屏幕）——延长的输出
     def seer_output(self):
         a = self.data_output('C9')
+        return a
+
+    # 下面是ssk让我补加的:经验值的输入输出
+    def exp_input(self, val):
+        self.data_input(val,'F2')
+        return self
+
+    def exp_output(self):
+        a = self.data_output('F2')
         return a
