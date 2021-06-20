@@ -181,7 +181,9 @@ class CationHazard:
         for bullet in self.bullets:
             bullet.draw_bullet()
         self.bullets.update()
+        # 显示得分和等级
         self.score_broad.show_score()
+        self.score_broad.show_level()
 
         # 删除生成时就在一起的离子
         pygame.sprite.groupcollide(self.anions, self.cations, False, True)

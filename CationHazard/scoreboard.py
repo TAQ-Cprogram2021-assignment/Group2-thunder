@@ -58,3 +58,10 @@ class Scoreboard:
     def prep_level(self):
         level_str = "Level: " + str(self.level)
         self.level_image = self.level_font.render(level_str, True, self.text_color, None)
+        self.level_rect = self.level_image.get_rect()
+        self.level_rect.left = 0
+        self.level_rect.top = self.score_rect.bottom + self.level_rect.height * 2
+
+    def show_level(self):
+        self.prep_level()
+        self.screen.blit(self.level_image, self.level_rect)

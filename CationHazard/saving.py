@@ -147,6 +147,7 @@ class Saving:
     def seer_input(self, val):
         self.data_input(val, 'C9')
         return self
+
     # 预知屏幕外的离子（小屏幕）——延长的输出
     def seer_output(self):
         a = self.data_output('C9')
@@ -154,7 +155,7 @@ class Saving:
 
     # 下面是ssk让我补加的:经验值的输入输出
     def exp_input(self, val):
-        self.data_input(val,'F2')
+        self.data_input(val, 'F2')
         return self
 
     def exp_output(self):
