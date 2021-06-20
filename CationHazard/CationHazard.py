@@ -185,8 +185,6 @@ class CationHazard:
 
         # 删除生成时就在一起的离子
         pygame.sprite.groupcollide(self.anions, self.cations, False, True)
-        pygame.sprite.groupcollide(self.cations, self.cations, False, True)
-        pygame.sprite.groupcollide(self.anions, self.anions, False, True)
 
         # 检测子弹和阴离子的碰撞，碰撞后得分
         collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions, True, True)

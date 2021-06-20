@@ -2,7 +2,7 @@
 from openpyxl import load_workbook
 
 
-class Store:
+class Saving:
     # 输入方法
     def __init__(self):
         pass
@@ -50,12 +50,12 @@ class Store:
         return a
 
     # 等级的输入
-    def rank_input(self, val):
+    def level_input(self, val):
         self.data_input(val, 'E2')
         return self
 
-    # 金币的输出
-    def rank_output(self):
+    # 等级的输出
+    def level_output(self):
         a = self.data_output('E2')
         return a
 
