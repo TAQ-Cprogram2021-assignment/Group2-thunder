@@ -16,8 +16,10 @@ from titles import Texts
 from titles import Buttons
 from store import Store
 from setting import Setting
-from scoreboard import Scoreboard
 from bullet import Ba as Ba_bullet
+
+from scoreboard import Scoreboard
+from experience import Experience
 
 from cation import Ba
 from anion import SO4
@@ -47,6 +49,7 @@ class CationHazard:
         self.buttons = Buttons(self)
         self.store = Store(self)
         self.score_broad = Scoreboard(self)
+        self.experience = Experience(self)
 
         # 创建飞船实例
         self.player = Plane(self)
@@ -183,15 +186,19 @@ class CationHazard:
         self.bullets.update()
         # 显示得分和等级
         self.score_broad.show_score()
-        self.score_broad.show_level()
+        self.experience.show_level_exp()
 
         # 删除生成时就在一起的离子
         pygame.sprite.groupcollide(self.anions, self.cations, False, True)
 
-        # 检测子弹和阴离子的碰撞，碰撞后得分
+        # 检测子弹和阴离子的碰撞，碰撞后得分并增加经验
         collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions, True, True)
         if collided_cation:
             self.score_broad.score_up()
+            self.experience.now_exp += 1
+
+        # 升级
+        self.experience.level_up()
 
         # 删除屏幕外的子弹
         self._delete_ions()
