@@ -13,7 +13,7 @@ class Experience:
 
         self.exp = [0, 20, 50, 100, 200, 500]
         self.level = self.saving.level_output()
-        self.now_exp = 0
+        self.now_exp = self.saving.exp_output()
 
         self.font = pygame.font.SysFont("", 24)
 
@@ -41,6 +41,7 @@ class Experience:
         if self.now_exp == self.exp[self.level]:
             self.level += 1
             self.now_exp = 0
+            self.saving.level_input(self.level)
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ from pictures import Pictures
 from music import Musics
 from player import Plane
 from settings import Settings
+from saving import Saving
 
 from titles import Texts
 from titles import Buttons
@@ -53,6 +54,8 @@ class CationHazard:
 
         # 创建飞船实例
         self.player = Plane(self)
+
+        self.saving = Saving()
 
         self.title_display = True
         self.play_game = False
@@ -133,6 +136,13 @@ class CationHazard:
                     self.bullets.add(bullet)
                     self.settings.bullet_num -= 1
                     self.score_broad.bullet_num = self.settings.bullet_num
+                if event.key == pygame.K_e:
+                    self.anions.empty()
+                    self.cations.empty()
+                    self.bullets.empty()
+                    self.settings.bullet_num = 0
+                    self.player.rect.midbottom = self.screen.get_rect().midbottom
+                    self.play_game, self.title_display = False, True
 
     def keyup_events(self, event):
         """键盘抬起时，人物停止移动"""
@@ -196,6 +206,7 @@ class CationHazard:
         if collided_cation:
             self.score_broad.score_up()
             self.experience.now_exp += 1
+            self.saving.exp_input(self.experience.now_exp)
 
         # 升级
         self.experience.level_up()
@@ -219,6 +230,13 @@ class CationHazard:
         self.anions.draw(self.screen)
         self.cations.update()
         self.anions.update()
+
+    def _game_over(self):
+        self.anions.empty()
+        self.cations.empty()
+        self.bullets.empty()
+        self.settings.bullet_num = 0
+        self.player.rect.midbottom = self.screen.get_rect().midbottom
 
     def _store_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
