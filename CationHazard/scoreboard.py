@@ -1,7 +1,7 @@
 import pygame.font
 
 from saving import Saving
-# from settings import Settings
+from settings import Settings
 
 
 class Scoreboard:
@@ -17,7 +17,8 @@ class Scoreboard:
         self.level_font = pygame.font.SysFont("", 24)
 
         self.savings = Saving()
-        self.bullet_num = 0
+        self.settings = Settings()
+        self.bullet_num = self.settings.bullet_num
 
         self.highest_score = self.savings.highest_score_output()
         self.level = self.savings.level_output()
@@ -25,13 +26,13 @@ class Scoreboard:
     def prep_score(self):
         """将得分转换为图像"""
         highest_score_str = "Highest Score: " + str(self.highest_score)
-        self.highest_score_image = self.score_font.render(highest_score_str, True, self.text_color, None)
+        self.highest_score_image = self.score_font.render(highest_score_str, True, self.settings.text_color, None)
         self.highest_score_rect = self.highest_score_image.get_rect()
         self.highest_score_rect.left = 0
         self.highest_score_rect.top = 20
 
         score_str = "score: " + str(self.score)
-        self.score_image = self.score_font.render(score_str, True, self.text_color, None)
+        self.score_image = self.score_font.render(score_str, True, self.settings.text_color, None)
         self.score_rect = self.score_image.get_rect()
         self.score_rect.left = 0
         self.score_rect.top = self.highest_score_rect.top + self.highest_score_rect.height
@@ -54,4 +55,3 @@ class Scoreboard:
         if self.score > self.highest_score:
             self.savings.highest_score_input(self.score)
             self.highest_score = self.score
-

@@ -90,15 +90,6 @@ class CationHazard:
             pygame.mixer.music.set_volume(self.settings.vol)
         # pygame.display.flip()
 
-    def _title_display(self):
-        self.screen.blit(self.pictures.background, (0, 0))
-        if self.play_title_music:
-            self.musics.play_title_music()
-            self.play_title_music = False
-        self.texts.draw_title()
-        self.buttons.button()
-        pygame.display.flip()
-
     def check_events(self):
         # 响应键盘和鼠标事件
         for event in pygame.event.get():
@@ -118,31 +109,27 @@ class CationHazard:
         if event.key == pygame.K_q:
             sys.exit()
 
-        # 用前后左右或wasd控制人物移动
-        if event.key == pygame.K_a or event.key == pygame.K_LEFT:
-            self.player.moving_left = True
-        if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
-            self.player.moving_right = True
-        if event.key == pygame.K_w or event.key == pygame.K_UP:
-            self.player.moving_up = True
-        if event.key == pygame.K_s or event.key == pygame.K_DOWN:
-            self.player.moving_down = True
-
-        # 游戏运行且子弹充足时按下空格发射子弹
-        if self.play_game and self.settings.bullet_num > 0:
+        # 游戏运行时检测
+        if self.play_game:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                # 用前后左右或wasd控制人物移动
+                if event.key == pygame.K_a or event.key == pygame.K_LEFT:
+                    self.player.moving_left = True
+                if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+                    self.player.moving_right = True
+                if event.key == pygame.K_w or event.key == pygame.K_UP:
+                    self.player.moving_up = True
+                if event.key == pygame.K_s or event.key == pygame.K_DOWN:
+                    self.player.moving_down = True
+                # 子弹充足时按下空格发射子弹
+                if self.settings.bullet_num > 0 and event.key == pygame.K_SPACE:
                     bullet = Ba_bullet(self, self.player.rect)
                     self.bullets.add(bullet)
                     self.settings.bullet_num -= 1
                     self.score_broad.bullet_num = self.settings.bullet_num
+                # 按下e时回到主界面
                 if event.key == pygame.K_e:
-                    self.anions.empty()
-                    self.cations.empty()
-                    self.bullets.empty()
-                    self.settings.bullet_num = 0
-                    self.player.rect.midbottom = self.screen.get_rect().midbottom
-                    self.play_game, self.title_display = False, True
+                    self._game_over()
 
     def keyup_events(self, event):
         """键盘抬起时，人物停止移动"""
@@ -170,12 +157,21 @@ class CationHazard:
         elif exit_clicked:
             sys.exit()
 
+    def _title_display(self):
+        self.screen.blit(self.pictures.background, (0, 0))
+        if self.play_title_music:
+            # self.musics.play_title_music()
+            self.play_title_music = False
+        self.texts.draw_title()
+        self.buttons.button()
+        pygame.display.flip()
+
     def _play_game(self):
         """游戏主进程"""
 
         # 只播放一次音乐
         if self.play_music_play:
-            self.musics.play_play_music()
+            # self.musics.play_play_music()
             self.play_music_play = False
 
         # 绘制背景、玩家，并开始创建阴阳离子
@@ -235,8 +231,14 @@ class CationHazard:
         self.anions.empty()
         self.cations.empty()
         self.bullets.empty()
-        self.settings.bullet_num = 0
+        coin = self.saving.golden_coin_output()
+        coin += self.score_broad.score
+        self.saving.golden_coin_input(coin)
+        self.score_broad.score = 0
+        self.settings.bullet_num = self.settings.init_bullet_num
         self.player.rect.midbottom = self.screen.get_rect().midbottom
+        self.play_game, self.title_display = False, True
+        self.play_title_music, self.play_music_play = True, True
 
     def _store_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
