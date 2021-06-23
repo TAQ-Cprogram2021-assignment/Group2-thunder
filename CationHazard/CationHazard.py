@@ -122,11 +122,10 @@ class CationHazard:
                 if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     self.player.moving_down = True
                 # 子弹充足时按下空格发射子弹
-                if self.settings.bullet_num > 0 and event.key == pygame.K_SPACE:
+                if self.score_broad.bullet_num > 0 and event.key == pygame.K_SPACE:
                     bullet = Ba_bullet(self, self.player.rect)
                     self.bullets.add(bullet)
-                    self.settings.bullet_num -= 1
-                    self.score_broad.bullet_num = self.settings.bullet_num
+                    self.score_broad.bullet_num -= 1
                 # 按下e时回到主界面
                 if event.key == pygame.K_e:
                     self._game_over()
@@ -241,7 +240,7 @@ class CationHazard:
         coin += self.score_broad.score
         self.saving.golden_coin_input(coin)
         self.score_broad.score = 0
-        self.settings.bullet_num = self.settings.init_bullet_num
+        self.score_broad.bullet_num = self.settings.bullet_num
         self.player.rect.midbottom = self.screen.get_rect().midbottom
         self.play_game, self.title_display = False, True
         self.play_title_music, self.play_music_play = True, True
@@ -259,6 +258,7 @@ class CationHazard:
                     self._title_display()
                 if self.store.bullet_up_rect.collidepoint(mouse_pos):
                     self.settings.bullet_level += 1
+                    self.saving.bullet_level_input(self.settings.bullet_level)
 
         pygame.display.flip()
 

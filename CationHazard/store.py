@@ -92,6 +92,9 @@ class Store:
         self.bullet_level_rect.midtop = self.bullet_up_rect.midbottom
         self.screen.blit(self.bullet_level_image, self.bullet_level_rect)
 
+    def draw_coin(self):
+        pass
+
     def draw(self):
         self.draw_attract_area_level()
         self.draw_speed_level()

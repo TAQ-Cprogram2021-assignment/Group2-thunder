@@ -60,15 +60,15 @@ class Saving:
         return a
 
     # 天赋类（被动）
-    # 吸引面积等级的输入
-    def attract_area_level_input(self, val):
-        self.data_input(val, 'B5')
-        return self
-
-    # 吸引面积等级的输出
-    def attract_area_level_output(self):
+    # 子弹等级的输出
+    def bullet_level_output(self):
         a = self.data_output('B5')
         return a
+
+    # 子弹等级的输入
+    def bullet_level_input(self, val):
+        self.data_input(val, 'B5')
+        return self
 
     # 运动速度等级的输入
     def speed_level_input(self, val):

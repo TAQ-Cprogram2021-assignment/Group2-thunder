@@ -14,10 +14,9 @@ class Settings:
         self.vol = 100.0
         self.text_color = (255, 255, 255)
 
-        self.init_bullet_num = self.saving.level_output()
-        # 初始化子弹
-        self.bullet_num = self.init_bullet_num
-
         self.blood = 100
 
-        self.bullet_level = 0
+        self.bullet_level = self.saving.bullet_level_output()
+
+        # 初始化子弹
+        self.bullet_num = self.bullet_level
