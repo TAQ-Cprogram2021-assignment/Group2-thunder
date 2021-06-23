@@ -19,8 +19,6 @@ class Scoreboard:
         self.savings = Saving()
         self.settings = Settings()
 
-        self.bullet_num = self.settings.bullet_num
-
         self.highest_score = self.savings.highest_score_output()
         self.level = self.savings.level_output()
 
@@ -49,6 +47,13 @@ class Scoreboard:
         self.prep_score()
         self.screen.blit(self.highest_score_image, self.highest_score_rect)
         self.screen.blit(self.score_image, self.score_rect)
+
+    def draw_bullet_num(self, bullet_num):
+        bullet_num_str = "Bullet: " + str(bullet_num)
+        self.bullet_num_image = self.score_font.render(bullet_num_str, True, self.text_color, None)
+        self.bullet_num_rect = self.bullet_num_image.get_rect()
+        self.bullet_num_rect.top = 20
+        self.bullet_num_rect.right = self.screen_rect.right - 20
         self.screen.blit(self.bullet_num_image, self.bullet_num_rect)
 
     def score_up(self):
