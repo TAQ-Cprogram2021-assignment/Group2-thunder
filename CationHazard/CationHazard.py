@@ -148,14 +148,20 @@ class CationHazard:
         store_clicked = self.buttons.store_button_rect.collidepoint(mouse_pos)
         exit_clicked = self.buttons.close_button_rect.collidepoint(mouse_pos)
 
-        if play_clicked:
-            self.title_display, self.play_game = False, True
-        elif setting_clicked:
-            self.title_display, self.setting_display = False, True
-        elif store_clicked:
-            self.title_display, self.store_display = False, True
-        elif exit_clicked:
-            sys.exit()
+        if self.title_display:
+            if play_clicked:
+                self.title_display, self.play_game = False, True
+            elif setting_clicked:
+                self.title_display, self.setting_display = False, True
+            elif store_clicked:
+                self.title_display, self.store_display = False, True
+            elif exit_clicked:
+                sys.exit()
+
+        # if self.store_display:
+        #     if self.store.return_rect.collidepoint(mouse_pos):
+        #         self.title_display, self.store_display = True, False
+        #         self._title_display()
 
     def _title_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
@@ -243,13 +249,18 @@ class CationHazard:
     def _store_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
         self.store.draw()
-        pygame.display.flip()
+        self.store.draw_bullet_level(self.settings.bullet_level)
+        
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if self.store.return_rect.collidepoint(mouse_pos):
                     self.title_display, self.store_display = True, False
                     self._title_display()
+                if self.store.bullet_up_rect.collidepoint(mouse_pos):
+                    self.settings.bullet_level += 1
+
+        pygame.display.flip()
 
     def _setting_display(self):
         self.screen.blit(self.pictures.background, (0, 0))

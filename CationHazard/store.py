@@ -85,8 +85,8 @@ class Store:
     def draw_return_button(self):
         self.screen.blit(self.return_image, self.return_rect)
 
-    def draw_bullet_level(self):
-        bullet_level_str = "Bullet Level: " + str(self.settings.bullet_num)
+    def draw_bullet_level(self, bullet_level):
+        bullet_level_str = "Bullet Level: " + str(bullet_level)
         self.bullet_level_image = self.font.render(bullet_level_str, True, self.settings.text_color, None)
         self.bullet_level_rect = self.bullet_level_image.get_rect()
         self.bullet_level_rect.midtop = self.bullet_up_rect.midbottom
@@ -104,7 +104,7 @@ class Store:
         self.draw_yuzhi()
         self.draw_return_button()
 
-        self.draw_bullet_level()
+        # self.draw_bullet_level()
 
 
     def return_title(self):
