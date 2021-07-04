@@ -164,6 +164,9 @@ class CationHazard:
                 self.settings.bullet_level += 1
                 self.settings.bullet_num += 1
                 self.saving.bullet_level_input(self.settings.bullet_level)
+            if self.store.blood_up_rect.collidepoint(mouse_pos):
+                self.settings.blood_level += 1
+                self.settings.blood = 100 + self.settings.blood_level
 
         if self.setting_display:
             if self.setting.return_rect.collidepoint(mouse_pos):

@@ -81,12 +81,12 @@ class Saving:
         return a
 
     # 穿透性（概率）的输入
-    def penetrability_level_input(self, val):
+    def blood_level_input(self, val):
         self.data_input(val, 'D5')
         return self
 
     # 穿透性（概率）的输出
-    def penetrability_level_output(self):
+    def blood_level_output(self):
         a = self.data_output('D5')
         return a
 

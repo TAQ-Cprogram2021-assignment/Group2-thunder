@@ -14,7 +14,9 @@ class Settings:
         self.vol = 100.0
         self.text_color = (255, 255, 255)
 
-        self.blood = 100
+        self.blood_level = self.saving.blood_level_output()
+
+        self.blood = 100 + 20 * self.blood_level
 
         self.bullet_level = self.saving.bullet_level_output()
 

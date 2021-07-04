@@ -23,6 +23,11 @@ class Store:
         self.bullet_up_rect.x = 70
         self.bullet_up_rect.y = 450
 
+        self.blood_up_image = pygame.image.load("materials/pictures/store/magnet.png").convert_alpha()
+        self.blood_up_rect = self.blood_up_image.get_rect()
+        self.blood_up_rect.x = 300
+        self.blood_up_rect.y = 450
+
     def draw_attract_area_level(self):
         attract_area_level_image = pygame.image.load("materials/pictures/store/magnet.png").convert_alpha()
         attract_area_level_rect = attract_area_level_image.get_rect()
@@ -40,12 +45,8 @@ class Store:
     def draw_bullet_up(self):
         self.screen.blit(self.bullet_up_image, self.bullet_up_rect)
 
-    def draw_timer(self):
-        title_image = pygame.image.load("materials/pictures/store/头头.png").convert_alpha()
-        title_rect = title_image.get_rect()
-        title_rect.x = 300
-        title_rect.y = 450
-        self.screen.blit(title_image, title_rect)
+    def draw_blood_up(self):
+        self.screen.blit(self.blood_up_image, self.blood_up_rect)
 
     def draw_larger_tem(self):
         title_image = pygame.image.load("materials/pictures/store/头头.png").convert_alpha()
@@ -99,7 +100,7 @@ class Store:
         self.draw_attract_area_level()
         self.draw_speed_level()
         self.draw_bullet_up()
-        self.draw_timer()
+        self.draw_blood_up()
         self.draw_larger_tem()
         self.draw_speed_tem()
         self.draw_clear_tem()
