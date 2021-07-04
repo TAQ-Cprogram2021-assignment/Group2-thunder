@@ -269,6 +269,7 @@ class CationHazard:
         self.screen.blit(self.pictures.background, (0, 0))
         self.store.draw()
         self.store.draw_bullet_level(self.settings.bullet_level)
+        self.store.draw_blood_level(self.settings.blood_level)
 
         pygame.display.flip()
 

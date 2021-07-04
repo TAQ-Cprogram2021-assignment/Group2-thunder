@@ -23,7 +23,7 @@ class Store:
         self.bullet_up_rect.x = 70
         self.bullet_up_rect.y = 450
 
-        self.blood_up_image = pygame.image.load("materials/pictures/store/magnet.png").convert_alpha()
+        self.blood_up_image = pygame.image.load("materials/pictures/store/blood.png").convert_alpha()
         self.blood_up_rect = self.blood_up_image.get_rect()
         self.blood_up_rect.x = 300
         self.blood_up_rect.y = 450
@@ -89,9 +89,16 @@ class Store:
     def draw_bullet_level(self, bullet_level):
         bullet_level_str = "Bullet Level: " + str(bullet_level)
         self.bullet_level_image = self.font.render(bullet_level_str, True, self.settings.text_color, None)
-        self.bullet_level_rect = self.bullet_level_image.get_rect()
-        self.bullet_level_rect.midtop = self.bullet_up_rect.midbottom
-        self.screen.blit(self.bullet_level_image, self.bullet_level_rect)
+        self.blood_level_rect = self.bullet_level_image.get_rect()
+        self.blood_level_rect.midtop = self.bullet_up_rect.midbottom
+        self.screen.blit(self.bullet_level_image, self.blood_level_rect)
+
+    def draw_blood_level(self, blood_level):
+        blood_level_str = "Blood Level: " + str(blood_level)
+        self.blood_level_image = self.font.render(blood_level_str, True, self.settings.text_color, None)
+        self.blood_level_rect = self.bullet_level_image.get_rect()
+        self.blood_level_rect.midtop = self.blood_up_rect.midbottom
+        self.screen.blit(self.blood_level_image, self.blood_level_rect)
 
     def draw_coin(self):
         pass
@@ -109,7 +116,6 @@ class Store:
         self.draw_return_button()
 
         # self.draw_bullet_level()
-
 
     def return_title(self):
         mouse_pos = pygame.mouse.get_pos()
