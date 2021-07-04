@@ -10,7 +10,7 @@ class Anion(Sprite):
         self.screen = ch_game.screen
         self.screen_rect = self.screen.get_rect()
 
-        self.down_speed = 0.3
+        self.down_speed = 0.7
 
 
 class SO4(Anion, Sprite):

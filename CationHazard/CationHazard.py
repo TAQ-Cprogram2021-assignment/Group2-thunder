@@ -101,8 +101,7 @@ class CationHazard:
                 self.keyup_events(event)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                if self.title_display:
-                    self.check_mouse_button_down_events(mouse_pos)
+                self.check_mouse_button_down_events(mouse_pos)
 
     def keydown_events(self, event):
         """响应键盘按下事件"""
@@ -157,10 +156,21 @@ class CationHazard:
             elif exit_clicked:
                 sys.exit()
 
-        # if self.store_display:
-        #     if self.store.return_rect.collidepoint(mouse_pos):
-        #         self.title_display, self.store_display = True, False
-        #         self._title_display()
+        if self.store_display:
+            if self.store.return_rect.collidepoint(mouse_pos):
+                self.title_display, self.store_display = True, False
+                self._title_display()
+            if self.store.bullet_up_rect.collidepoint(mouse_pos):
+                self.settings.bullet_level += 1
+                self.settings.bullet_num += 1
+                self.saving.bullet_level_input(self.settings.bullet_level)
+
+        if self.setting_display:
+            if self.setting.return_rect.collidepoint(mouse_pos):
+                self.title_display, self.setting_display = True, False
+                self._title_display()
+            if self.setting.vol_plus_image_rect.collidepoint(mouse_pos):
+                self.settings.vol -= 1.0
 
     def _title_display(self):
         self.screen.blit(self.pictures.background, (0, 0))
@@ -186,8 +196,8 @@ class CationHazard:
         self.player.update_ship()
 
         # 检测玩家和阳离子碰撞，碰撞后增加子弹数
-        collided_cation = pygame.sprite.spritecollide(self.player, self.cations, True)
-        if collided_cation:
+        collided_player_cations = pygame.sprite.spritecollide(self.player, self.cations, True)
+        if collided_player_cations:
             self.settings.bullet_num += randint(2, 4)
             self.score_broad.bullet_num = self.settings.bullet_num
 
@@ -204,11 +214,17 @@ class CationHazard:
         pygame.sprite.groupcollide(self.anions, self.cations, False, True)
 
         # 检测子弹和阴离子的碰撞，碰撞后得分并增加经验
-        collided_cation = pygame.sprite.groupcollide(self.bullets, self.anions, True, True)
-        if collided_cation:
+        collided_bullets_anions = pygame.sprite.groupcollide(self.bullets, self.anions, True, True)
+        if collided_bullets_anions:
             self.score_broad.score_up()
             self.experience.now_exp += 1
             self.saving.exp_input(self.experience.now_exp)
+
+        collided_player_anions = pygame.sprite.spritecollide(self.player, self.anions, True)
+        if collided_player_anions:
+            self.settings.blood -= 20
+            if self.settings.blood <= 0:
+                self._game_over()
 
         # 升级
         self.experience.level_up()
@@ -238,7 +254,7 @@ class CationHazard:
         self.cations.empty()
         self.bullets.empty()
         coin = self.saving.golden_coin_output()
-        coin += self.score_broad.score
+        coin += self.score_broad.score // 100
         self.saving.golden_coin_input(coin)
         self.score_broad.score = 0
         self.settings.bullet_num = self.settings.bullet_level
@@ -250,16 +266,6 @@ class CationHazard:
         self.screen.blit(self.pictures.background, (0, 0))
         self.store.draw()
         self.store.draw_bullet_level(self.settings.bullet_level)
-        
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                if self.store.return_rect.collidepoint(mouse_pos):
-                    self.title_display, self.store_display = True, False
-                    self._title_display()
-                if self.store.bullet_up_rect.collidepoint(mouse_pos):
-                    self.settings.bullet_level += 1
-                    self.saving.bullet_level_input(self.settings.bullet_level)
 
         pygame.display.flip()
 
@@ -267,14 +273,6 @@ class CationHazard:
         self.screen.blit(self.pictures.background, (0, 0))
         self.setting.draw()
         pygame.display.flip()
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                if self.setting.return_rect.collidepoint(mouse_pos):
-                    self.title_display, self.setting_display = True, False
-                    self._title_display()
-                if self.setting.vol_plus_image_rect.collidepoint(mouse_pos):
-                    self.settings.vol -= 1.0
 
     def _delete_ions(self):
         for cation in self.cations:
