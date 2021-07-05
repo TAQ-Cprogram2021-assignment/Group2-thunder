@@ -52,7 +52,7 @@ class CationHazard:
         self.store = Store(self)
         self.score_broad = Scoreboard(self)
         self.experience = Experience(self)
-        self.coin = Coin()
+        self.coin = Coin(self)
 
         # 创建飞船实例
         self.player = Plane(self)
@@ -163,12 +163,16 @@ class CationHazard:
                 self.title_display, self.store_display = True, False
                 self._title_display()
             if self.store.bullet_up_rect.collidepoint(mouse_pos):
-                self.settings.bullet_level += 1
-                self.settings.bullet_num += 1
+                if self.coin.coin >= 20 + 5 * (self.settings.bullet_level ** 2):
+                    self.coin.coin -= 20 + 5 * (self.settings.bullet_level ** 2)
+                    self.settings.bullet_level += 1
+                    self.settings.bullet_num += 1
                 self.saving.bullet_level_input(self.settings.bullet_level)
             if self.store.blood_up_rect.collidepoint(mouse_pos):
-                self.settings.blood_level += 1
-                self.settings.blood = 100 + self.settings.blood_level
+                if self.coin.coin >= 20 + 5 * (self.settings.blood_level ** 2):
+                    self.coin.coin -= 20 + 5 * (self.settings.blood_level ** 2)
+                    self.settings.blood_level += 1
+                    self.settings.blood = 100 + self.settings.blood_level
 
         if self.setting_display:
             if self.setting.return_rect.collidepoint(mouse_pos):
@@ -214,6 +218,7 @@ class CationHazard:
         self.score_broad.show_score()
         self.score_broad.draw_bullet_num(self.settings.bullet_num)
         self.experience.show_level_exp()
+        self.coin.show_coin(self.coin.coin, "play")
 
         # 删除生成时就在一起的离子
         pygame.sprite.groupcollide(self.anions, self.cations, False, True)
@@ -258,8 +263,8 @@ class CationHazard:
         self.anions.empty()
         self.cations.empty()
         self.bullets.empty()
-        self.coin += self.score_broad.score // 100
-        self.saving.golden_coin_input(self.coin)
+        self.coin.coin += self.score_broad.score // 100
+        self.saving.golden_coin_input(self.coin.coin)
         self.score_broad.score = 0
         self.settings.bullet_num = self.settings.bullet_level
         self.player.rect.midbottom = self.screen.get_rect().midbottom
@@ -271,6 +276,7 @@ class CationHazard:
         self.store.draw()
         self.store.draw_bullet_level(self.settings.bullet_level)
         self.store.draw_blood_level(self.settings.blood_level)
+        self.coin.show_coin(self.coin.coin, "store")
 
         pygame.display.flip()
 

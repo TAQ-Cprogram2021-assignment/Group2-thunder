@@ -45,15 +45,42 @@ class Experience:
 
 
 class Coin:
-    def _init__(self, ch_game):
+    def __init__(self, ch_game):
         self.screen = ch_game.screen
 
+        self.exp = Experience(ch_game)
+        self.exp.prep_level()
+        self.exp.prep_exp()
         self.scoreboard = Scoreboard(ch_game)
         self.saving = Saving()
 
         self.font = pygame.font.SysFont("", 24)
 
         self.coin = self.saving.golden_coin_output()
+
+    def prep_coin_play(self, coin, stage):
+        coin_str = ": " + str(coin)
+        self.coin_num_image = self.font.render(coin_str, True, self.scoreboard.text_color, None)
+        self.coin_num_rect = self.coin_num_image.get_rect()
+
+        if stage == "play":
+            self.coin_num_rect.midtop = self.exp.exp_rect.midbottom
+            self.coin_num_rect.y += 20
+
+        self.coin_image = pygame.image.load("materials/pictures/store/coin.png")
+
+        if stage == "store":
+            self.coin_num_rect.midtop = self.screen.get_rect().midtop
+            self.coin_num_rect.y += 20
+
+        self.coin_rect = self.coin_image.get_rect()
+        self.coin_rect.midright = self.coin_num_rect.midleft
+
+
+    def show_coin(self, coin, stage):
+        self.prep_coin_play(coin, stage)
+        self.screen.blit(self.coin_num_image, self.coin_num_rect)
+        self.screen.blit(self.coin_image, self.coin_rect)
 
 
 if __name__ == "__main__":
