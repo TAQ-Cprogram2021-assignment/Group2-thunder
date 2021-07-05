@@ -5,10 +5,10 @@ from saving import Saving
 
 
 class Experience:
-    def __init__(self, ai_game):
-        self.screen = ai_game.screen
+    def __init__(self, ch_game):
+        self.screen = ch_game.screen
 
-        self.scoreboard = Scoreboard(ai_game)
+        self.scoreboard = Scoreboard(ch_game)
         self.saving = Saving()
 
         self.exp = [0, 20, 50, 100, 200, 500]
@@ -42,6 +42,18 @@ class Experience:
             self.level += 1
             self.now_exp = 0
             self.saving.level_input(self.level)
+
+
+class Coin:
+    def _init__(self, ch_game):
+        self.screen = ch_game.screen
+
+        self.scoreboard = Scoreboard(ch_game)
+        self.saving = Saving()
+
+        self.font = pygame.font.SysFont("", 24)
+
+        self.coin = self.saving.golden_coin_output()
 
 
 if __name__ == "__main__":

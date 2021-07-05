@@ -21,6 +21,7 @@ from bullet import Ba as Ba_bullet
 
 from scoreboard import Scoreboard
 from experience import Experience
+from experience import Coin
 
 from cation import Ba
 from anion import SO4
@@ -51,6 +52,7 @@ class CationHazard:
         self.store = Store(self)
         self.score_broad = Scoreboard(self)
         self.experience = Experience(self)
+        self.coin = Coin()
 
         # 创建飞船实例
         self.player = Plane(self)
@@ -256,9 +258,8 @@ class CationHazard:
         self.anions.empty()
         self.cations.empty()
         self.bullets.empty()
-        coin = self.saving.golden_coin_output()
-        coin += self.score_broad.score // 100
-        self.saving.golden_coin_input(coin)
+        self.coin += self.score_broad.score // 100
+        self.saving.golden_coin_input(self.coin)
         self.score_broad.score = 0
         self.settings.bullet_num = self.settings.bullet_level
         self.player.rect.midbottom = self.screen.get_rect().midbottom
