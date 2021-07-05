@@ -2,6 +2,7 @@ import pygame.font
 
 from scoreboard import Scoreboard
 from saving import Saving
+from settings import Settings
 
 
 class Experience:
@@ -81,6 +82,28 @@ class Coin:
         self.prep_coin_play(coin, stage)
         self.screen.blit(self.coin_num_image, self.coin_num_rect)
         self.screen.blit(self.coin_image, self.coin_rect)
+
+
+class Blood:
+    def __init__(self, ch_game):
+        self.screen = ch_game.screen
+
+        self.scoreboard = Scoreboard(ch_game)
+        self.settings = Settings()
+
+        self.font = pygame.font.SysFont("", 24)
+
+    def prep_blood(self, blood, max_blood):
+        blood_str = "Blood: " + str(blood) + " / " + str(max_blood)
+        self.blood_image = self.font.render(blood_str, True, self.scoreboard.text_color, None)
+        self.blood_rect = self.blood_image.get_rect()
+        self.blood_rect.x = self.screen.get_rect().width - self.blood_rect.width
+        self.blood_rect.y = self.screen.get_rect().height // 2
+
+    def show_blood(self, blood, max_blood):
+        self.prep_blood(blood, max_blood)
+        self.screen.blit(self.blood_image, self.blood_rect)
+
 
 
 if __name__ == "__main__":
