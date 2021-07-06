@@ -7,22 +7,21 @@ import sys
 import time
 from random import randint
 
-from pictures import Pictures
-from music import Musics
 from player import Plane
+from settings import Musics
 from settings import Settings
 from saving import Saving
 
-from titles import Texts
+from titles import Title
 from titles import Buttons
 from store import Store
 from setting import Setting
 from bullet import Ba as Ba_bullet
 
-from scoreboard import Scoreboard
-from experience import Experience
-from experience import Coin
-from experience import Blood
+from word_display import Scoreboard
+from word_display import Experience
+from word_display import Coin
+from word_display import Blood
 
 from cation import Ba
 from anion import SO4
@@ -35,10 +34,9 @@ class CationHazard:
         self.start_time = time.time()
 
         self.settings = Settings()
-        self.pictures = Pictures()
 
         # 创建显示窗口
-        pygame.display.set_icon(self.pictures.logo)
+        pygame.display.set_icon(self.settings.logo)
         pygame.display.set_caption("Cation Hazard")
         self.screen = pygame.display.set_mode(self.settings.screen_size)
         self.screen_size = self.screen.get_rect()
@@ -48,7 +46,7 @@ class CationHazard:
         self.musics = Musics()
 
         # 创建文字实例
-        self.texts = Texts(self)
+        self.texts = Title(self)
         self.buttons = Buttons(self)
         self.store = Store(self)
         self.score_broad = Scoreboard(self)
@@ -77,7 +75,7 @@ class CationHazard:
 
     def run_game(self):
         # 绘制屏幕并显示
-        self.screen.blit(self.pictures.background, (0, 0))
+        self.screen.blit(self.settings.background, (0, 0))
         pygame.display.flip()
 
         while True:
@@ -190,7 +188,7 @@ class CationHazard:
                 self.settings.vol -= 1.0
 
     def _title_display(self):
-        self.screen.blit(self.pictures.background, (0, 0))
+        self.screen.blit(self.settings.background, (0, 0))
         if self.play_title_music:
             # self.musics.play_title_music()
             self.play_title_music = False
@@ -203,11 +201,11 @@ class CationHazard:
 
         # 只播放一次音乐
         if self.play_music_play:
-            # self.musics.play_play_music()
+            self.musics.play_play_music()
             self.play_music_play = False
 
         # 绘制背景、玩家，并开始创建阴阳离子
-        self.screen.blit(self.pictures.background, (0, 0))
+        self.screen.blit(self.settings.background, (0, 0))
         self.player.draw_plane()
         self._create_ion()
         self.player.update_ship()
@@ -281,7 +279,7 @@ class CationHazard:
         self.play_title_music, self.play_music_play = True, True
 
     def _store_display(self):
-        self.screen.blit(self.pictures.background, (0, 0))
+        self.screen.blit(self.settings.background, (0, 0))
         self.store.draw()
         self.store.draw_bullet_level(self.settings.bullet_level)
         self.store.draw_blood_level(self.settings.blood_level)
@@ -290,7 +288,7 @@ class CationHazard:
         pygame.display.flip()
 
     def _setting_display(self):
-        self.screen.blit(self.pictures.background, (0, 0))
+        self.screen.blit(self.settings.background, (0, 0))
         self.setting.draw()
         pygame.display.flip()
 

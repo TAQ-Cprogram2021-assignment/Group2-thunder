@@ -1,13 +1,14 @@
 import pygame
 
-from pictures import Pictures
 from saving import Saving
 
 
 class Settings:
     def __init__(self):
-        pictures = Pictures()
-        self.screen_size = pygame.Surface.get_size(pictures.background)
+        self.logo = pygame.image.load("materials/pictures/logo/logo.ico")
+        self.background = pygame.image.load("materials/pictures/background/bgbg.jpg")
+
+        self.screen_size = pygame.Surface.get_size(self.background)
 
         self.saving = Saving()
 
@@ -21,3 +22,22 @@ class Settings:
 
         # 初始化子弹
         self.bullet_num = self.bullet_level
+
+
+class Musics:
+    def __init__(self):
+        pygame.mixer.init()  # 初始化
+
+        self.settings = Settings()
+
+        self.title_music = "materials/musics/Babe.mp3"
+
+        self.play_music = "materials/musics/Blu.mp3"
+
+    def play_title_music(self):
+        pygame.mixer.music.load(self.title_music)  # 加载音乐
+        pygame.mixer.music.play(-1)  # 播放
+
+    def play_play_music(self):
+        pygame.mixer.music.load(self.play_music)  # 加载音乐
+        pygame.mixer.music.play(-1)  # 播放

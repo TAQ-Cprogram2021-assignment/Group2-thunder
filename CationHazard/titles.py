@@ -1,7 +1,7 @@
-import pygame.font
+import pygame
 
 
-class Texts:
+class Title:
     def __init__(self, ch_game):
         self.screen = ch_game.screen
         self.screen_rect = self.screen.get_rect()
@@ -24,39 +24,30 @@ class Buttons:
         self.play_button_rect = self.play_button_image.get_rect()
         self.play_button_rect.midbottom = self.screen_rect.midbottom
         self.play_button_rect.y -= 550
-        # store button
-        self.store_button_image = pygame.image.load("materials/pictures/title/store.png").convert_alpha()
-        self.store_button_rect = self.store_button_image.get_rect()
-        self.store_button_rect.midbottom = self.screen_rect.midbottom
-        self.store_button_rect.y -= 450
+
         # setting button
         self.setting_button_image = pygame.image.load("materials/pictures/title/setting.png").convert_alpha()
         self.setting_button_rect = self.setting_button_image.get_rect()
         self.setting_button_rect.midbottom = self.screen_rect.midbottom
         self.setting_button_rect.y -= 350
+
+        # store button
+        self.store_button_image = pygame.image.load("materials/pictures/title/store.png").convert_alpha()
+        self.store_button_rect = self.store_button_image.get_rect()
+        self.store_button_rect.midbottom = self.screen_rect.midbottom
+        self.store_button_rect.y -= 450
+
         # close button
         self.close_button_image = pygame.image.load("materials/pictures/title/exitgame.png").convert_alpha()
         self.close_button_rect = self.close_button_image.get_rect()
         self.close_button_rect.midbottom = self.screen_rect.midbottom
         self.close_button_rect.y -= 250
 
-    def play_button(self):
-        self.screen.blit(self.play_button_image, self.play_button_rect)
-
-    def setting_button(self):
-        self.screen.blit(self.setting_button_image, self.setting_button_rect)
-
-    def store_button(self):
-        self.screen.blit(self.store_button_image, self.store_button_rect)
-
-    def close_button(self):
-        self.screen.blit(self.close_button_image, self.close_button_rect)
-
     def button(self):
-        self.play_button()
-        self.store_button()
-        self.close_button()
-        self.setting_button()
+        self.screen.blit(self.play_button_image, self.play_button_rect)
+        self.screen.blit(self.store_button_image, self.store_button_rect)
+        self.screen.blit(self.setting_button_image, self.setting_button_rect)
+        self.screen.blit(self.close_button_image, self.close_button_rect)
 
 
 if __name__ == "__main__":

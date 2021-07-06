@@ -70,16 +70,6 @@ class Saving:
         self.data_input(val, 'B5')
         return self
 
-    # 运动速度等级的输入
-    def speed_level_input(self, val):
-        self.data_input(val, 'C5')
-        return self
-
-    # 运动速度等级的输出
-    def speed_level_output(self):
-        a = self.data_output('C5')
-        return a
-
     # 穿透性（概率）的输入
     def blood_level_input(self, val):
         self.data_input(val, 'D5')
@@ -88,69 +78,6 @@ class Saving:
     # 穿透性（概率）的输出
     def blood_level_output(self):
         a = self.data_output('D5')
-        return a
-
-    # 商店类（效果）
-    # 时间类（冷却）的输入
-    def frozen_input(self, val):
-        self.data_input(val, 'B7')
-        return self
-
-    # 时间类（冷却）的输出
-    def frozen_output(self):
-        a = self.data_output('B7')
-        return a
-
-    # 短暂增大面积道具数目的输入
-    def attract_area_temporary_input(self, val):
-        self.data_input(val, 'C7')
-        return self
-
-    # 短暂增大面积道具数目的输出
-    def attract_area_temporary_output(self):
-        a = self.data_output('C7')
-        return a
-
-    # 暂时运动速度道具数目的输入
-    def speed_temporary_input(self, val):
-        self.data_input(val, 'D7')
-        return self
-
-    # 暂时运动速度道具数目的输出
-    def speed_temporary_output(self):
-        a = self.data_output('D7')
-        return a
-
-    # 清屏道具数目的输入
-    def clear_input(self, val):
-        self.data_input(val, 'D7')
-        return self
-
-    # 清屏道具数目的输出
-    def clear_output(self):
-        a = self.data_output('D7')
-        return a
-
-    # 技能类（主动）
-
-    # 无双（冷却时间）——延长的输入
-    def wushuanglengque_input(self, val):
-        self.data_input(val, 'B9')
-        return self
-
-    # 无双（冷却时间）——延长的输出
-    def wushuanglengque_output(self):
-        a = self.data_output('B9')
-        return a
-
-    # 预知屏幕外的离子（小屏幕）——延长的输入
-    def seer_input(self, val):
-        self.data_input(val, 'C9')
-        return self
-
-    # 预知屏幕外的离子（小屏幕）——延长的输出
-    def seer_output(self):
-        a = self.data_output('C9')
         return a
 
     # 下面是ssk让我补加的:经验值的输入输出

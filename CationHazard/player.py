@@ -42,5 +42,3 @@ class Plane(Sprite):
         # 根据 self.x 更新rect对象
         self.rect.x = self.x
         self.rect.y = self.y
-
-    # def shoot_cation(self):
