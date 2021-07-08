@@ -48,3 +48,7 @@ class SO4(Anion, Sprite):
     def update(self):
         self.y += self.down_speed
         self.rect.y = self.y
+
+
+if __name__ == "__main__":
+    pass
