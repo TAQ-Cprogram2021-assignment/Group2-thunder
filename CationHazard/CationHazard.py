@@ -23,8 +23,8 @@ from word_display import Experience
 from word_display import Coin
 from word_display import Blood
 
-from cation import Ba
-from anion import SO4
+from ion import Ba
+from ion import SO4
 
 
 class CationHazard:
@@ -170,7 +170,7 @@ class CationHazard:
                     self.saving.golden_coin_input(self.coin.coin)
                     self.settings.bullet_level += 1
                     self.settings.bullet_num += 1
-                self.saving.bullet_level_input(self.settings.bullet_level)
+                    self.saving.bullet_level_input(self.settings.bullet_level)
             if self.store.blood_up_rect.collidepoint(mouse_pos):
                 if self.coin.coin >= 20 + 5 * (self.settings.blood_level ** 2):
                     self.coin.coin -= 20 + 5 * (self.settings.blood_level ** 2)
@@ -178,7 +178,7 @@ class CationHazard:
                     self.settings.blood_level += 1
                     self.settings.blood = 100 + self.settings.blood_level * 50
                     self.max_blood = 100 + self.settings.blood_level * 50
-                self.saving.blood_level_input(self.settings.blood_level)
+                    self.saving.blood_level_input(self.settings.blood_level)
 
         if self.setting_display:
             if self.setting.return_rect.collidepoint(mouse_pos):
@@ -190,7 +190,7 @@ class CationHazard:
     def _title_display(self):
         self.screen.blit(self.settings.background, (0, 0))
         if self.play_title_music:
-            # self.musics.play_title_music()
+            self.musics.play_title_music()
             self.play_title_music = False
         self.texts.draw_title()
         self.buttons.button()
